@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">נגן וידאו</string>
+    <string name="play">נגן</string>
+    <string name="pause">הפסק</string>
+    <string name="stop">עצור</string>
+    <string name="replay">נגן מחדש</string>
+    <string name="special_video_player">נגן וידאו מיוחד</string>
+    <string name="controls">בקרים:</string>
+</resources>
