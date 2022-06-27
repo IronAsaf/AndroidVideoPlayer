@@ -146,37 +146,26 @@ public class MainActivity extends AppCompatActivity
 
     private void OnListedVideoClick(String nameOfVideo)
     {
-
+        System.out.println("vid " + nameOfVideo);
+        StopVideo();
+        SetVideo(nameOfVideo);
+        PlayVideo();
     }
 
     private void ListAllVideos()
     {
-        String ending = ".mp4";
-        String path = VideoUtility.MEDIA_PATH;
-        ArrayList<String> strArray = FileUtility.FileNamesArray(path,ending);
-        //playableVideosFromPathList = new Button[strArray.size()];
-        //Instead, make a list of buttons name is the file name, onClick (register them to same event)
-        // when clicked it will play video or something.
-        // and reset the the current video thing
-        Button bt = new Button(this);
-        bt.setText("asd");
-        String strrr = bt.getText().toString();
-        String str = "";
+        ArrayList<String> strArray = FileUtility.FileNamesArray(VideoUtility.MEDIA_PATH,".mp4");
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT);
         for(int i =0; i < strArray.size(); i++)
         {
             Button btn = new Button(this);
-            btn.setText(strArray.get(i));
+            String btnName = strArray.get(i);
+            btn.setText(btnName);
             linearLayoutForVideosList.addView(btn,lp);
-            btn.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    //final String Name = (Button) v.getText().toString();
-                    //OnListedVideoClick(Name);
-                }
+            btn.setOnClickListener(v -> {
+               OnListedVideoClick(btnName);
             });
-           // playableVideosFromPathList[i] = btn;
         }
-
     }
 }
