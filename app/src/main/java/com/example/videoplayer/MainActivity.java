@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity
         CacheAttributes();
         SetButtonListeners();
         SetVideo(currentVideoName);
+        ListAllVideos();
     }
 
     private void CacheAttributes()
@@ -104,7 +105,6 @@ public class MainActivity extends AppCompatActivity
     private void PauseVideo()
     {
         videoPlayer.pause();
-        ListAllVideos();
     }
 
     private void PlayVideo()
@@ -150,7 +150,7 @@ public class MainActivity extends AppCompatActivity
         TextView view = findViewById(R.id.textView);
         for(int i =0; i < strArray.size(); i++)
         {
-            str += strArray.get(i);
+            str += strArray.get(i) + '\n';
         }
 
         view.setText(str);
