@@ -9,6 +9,7 @@ import android.media.AudioManager;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -19,6 +20,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity
 {
     //XML Attributes
+    private LinearLayout linearLayoutForVideosList;
     private VideoView videoPlayer;
     private ProgressBar videoProgressBar;
     private SeekBar soundSeekBar;
@@ -29,6 +31,7 @@ public class MainActivity extends AppCompatActivity
 
     //Runtime Attributes
     private String currentVideoName = "sample.mp4";
+    private Button[] playableVideosFromPathList;
     AudioManager audioManager;
 
     @Override
@@ -48,6 +51,7 @@ public class MainActivity extends AppCompatActivity
 
     private void CacheAttributes()
     {
+        linearLayoutForVideosList = findViewById(R.id.linearLayoutForVideoButtons);
         videoPlayer = findViewById(R.id.videoView);
         videoProgressBar = findViewById(R.id.videoProgressBar);
         soundSeekBar = findViewById(R.id.soundSeekbar);
@@ -145,14 +149,20 @@ public class MainActivity extends AppCompatActivity
         String ending = ".mp4";
         String path = VideoUtility.MEDIA_PATH;
         ArrayList<String> strArray = FileUtility.FileNamesArray(path,ending);
-
+        playableVideosFromPathList = new Button[strArray.size()];
+        //Instead, make a list of buttons name is the file name, onClick (register them to same event)
+        // when clicked it will play video or something.
+        // and reset the the current video thing
         String str = "";
-        TextView view = findViewById(R.id.textView);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT);
         for(int i =0; i < strArray.size(); i++)
         {
-            str += strArray.get(i) + '\n';
+            Button btn = new Button(this);
+            btn.setText(strArray.get(i));
+            linearLayoutForVideosList.addView(btn,lp);
+            playableVideosFromPathList[i] = btn;
         }
 
-        view.setText(str);
     }
 }

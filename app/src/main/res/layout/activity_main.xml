@@ -129,6 +129,7 @@
             android:background="?android:attr/listDivider" />
 
         <LinearLayout
+            android:id="@+id/linearLayoutForVideoButtons"
             android:layout_width="match_parent"
             android:layout_height="256dp"
             android:orientation="vertical">
