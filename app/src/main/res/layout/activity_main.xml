@@ -140,15 +140,6 @@
 
             </SearchView>
 
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="match_parent"
-                android:layout_height="207dp"
-                android:text="@string/textview"
-                android:textSize="20sp"
-                android:visibility="visible"
-                tools:text="hello"
-                tools:visibility="visible" />
         </LinearLayout>
 
     </LinearLayout>

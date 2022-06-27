@@ -1,19 +1,19 @@
 package com.example.videoplayer;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.media.AudioManager;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.SeekBar;
-import android.widget.TextView;
 import android.widget.VideoView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import java.util.ArrayList;
 
@@ -144,15 +144,23 @@ public class MainActivity extends AppCompatActivity
         SetVideo(currentVideoName);
     }
 
+    private void OnListedVideoClick(String nameOfVideo)
+    {
+
+    }
+
     private void ListAllVideos()
     {
         String ending = ".mp4";
         String path = VideoUtility.MEDIA_PATH;
         ArrayList<String> strArray = FileUtility.FileNamesArray(path,ending);
-        playableVideosFromPathList = new Button[strArray.size()];
+        //playableVideosFromPathList = new Button[strArray.size()];
         //Instead, make a list of buttons name is the file name, onClick (register them to same event)
         // when clicked it will play video or something.
         // and reset the the current video thing
+        Button bt = new Button(this);
+        bt.setText("asd");
+        String strrr = bt.getText().toString();
         String str = "";
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -161,7 +169,13 @@ public class MainActivity extends AppCompatActivity
             Button btn = new Button(this);
             btn.setText(strArray.get(i));
             linearLayoutForVideosList.addView(btn,lp);
-            playableVideosFromPathList[i] = btn;
+            btn.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    //final String Name = (Button) v.getText().toString();
+                    //OnListedVideoClick(Name);
+                }
+            });
+           // playableVideosFromPathList[i] = btn;
         }
 
     }
