@@ -45,8 +45,9 @@ public class MainActivity extends AppCompatActivity
 
         CacheAttributes();
         SetButtonListeners();
-        SetVideo(currentVideoName);
-        ListAllVideos();
+        String name = ListAllVideos();
+        SetVideo(name);
+
     }
 
     private void CacheAttributes()
@@ -152,7 +153,7 @@ public class MainActivity extends AppCompatActivity
         PlayVideo();
     }
 
-    private void ListAllVideos()
+    private String ListAllVideos()
     {
         ArrayList<String> strArray = FileUtility.FileNamesArray(VideoUtility.MEDIA_PATH,".mp4");
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
@@ -167,5 +168,7 @@ public class MainActivity extends AppCompatActivity
                OnListedVideoClick(btnName);
             });
         }
+        if(strArray.size() <=0) return "";
+        return strArray.get(0);
     }
 }
