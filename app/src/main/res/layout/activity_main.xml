@@ -19,7 +19,7 @@
             android:text="@string/special_video_player"
             android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-            android:textColor="#9C27B0"
+            android:textColor="#731CF0"
             android:textSize="34sp"
             android:textStyle="bold"
             android:typeface="normal" />
@@ -41,6 +41,12 @@
             android:layout_height="1dp"
             android:background="?android:attr/listDivider" />
 
+        <ProgressBar
+            android:id="@+id/videoProgressBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
         <TextView
             android:id="@+id/controls"
             android:layout_width="match_parent"
@@ -48,15 +54,10 @@
             android:fontFamily="@font/ibm_plexsans_hebrew_regular"
             android:text="@string/controls"
             android:textAlignment="center"
-            android:textColor="#673AB7"
+            android:textColor="#731CF0"
             android:textSize="16sp"
+            android:textStyle="bold"
             android:typeface="normal" />
-
-        <ProgressBar
-            android:id="@+id/videoProgressBar"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
 
         <View
             android:id="@+id/divider3"
@@ -128,21 +129,27 @@
             android:layout_height="1dp"
             android:background="?android:attr/listDivider" />
 
-        <LinearLayout
-            android:id="@+id/linearLayoutForVideoButtons"
+        <ScrollView
+            style="@android:style/Widget.ScrollView"
             android:layout_width="match_parent"
-            android:layout_height="256dp"
-            android:orientation="vertical"
-            tools:visibility="visible">
+            android:layout_height="match_parent"
+            android:fillViewport="false"
+            android:scrollbarStyle="insideOverlay">
 
-            <SearchView
-                android:id="@+id/searchView"
+            <LinearLayout
+                android:id="@+id/linearLayoutForVideoButtons"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-            </SearchView>
+                <SearchView
+                    android:id="@+id/searchView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-        </LinearLayout>
+                </SearchView>
+            </LinearLayout>
+        </ScrollView>
 
     </LinearLayout>
 </RelativeLayout>
