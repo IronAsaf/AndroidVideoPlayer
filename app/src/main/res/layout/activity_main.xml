@@ -132,7 +132,8 @@
             android:id="@+id/linearLayoutForVideoButtons"
             android:layout_width="match_parent"
             android:layout_height="256dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            tools:visibility="visible">
 
             <SearchView
                 android:id="@+id/searchView"

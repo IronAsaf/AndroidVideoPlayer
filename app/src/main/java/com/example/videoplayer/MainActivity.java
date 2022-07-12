@@ -5,6 +5,7 @@ import android.content.pm.PackageManager;
 import android.media.AudioManager;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -54,11 +55,16 @@ public class MainActivity extends AppCompatActivity
 
     private void SetSearchView()
     {
-        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
-            public boolean onClose() {
-                String str = searchView.getQuery().toString();
-                OnSearchCloseAffectButtons(str);
+            public boolean onQueryTextSubmit(String s) {
+                OnSearchCloseAffectButtons(s);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                OnSearchCloseAffectButtons(s);
                 return false;
             }
         });
@@ -192,11 +198,19 @@ public class MainActivity extends AppCompatActivity
 
     private void OnSearchCloseAffectButtons(String searchQuery)
     {
+        if(searchQuery.isEmpty())
+        {
+            for(int i =0; i < playableVideosButtons.length; i++)
+            {
+                playableVideosButtons[i].setVisibility(View.VISIBLE);
+            }
+            return;
+        }
         for(int i = 0; i < playableVideosButtons.length; i++)
         {
-            if(playableVideosButtons[i].getText().toString().contains(searchQuery)) continue;
-            playableVideosButtons[i].setEnabled(false);
-            playableVideosButtons[i].setAlpha(0f);
+            boolean queryFindings = playableVideosButtons[i].getText().toString().contains(searchQuery);
+            int visibility = queryFindings ? View.VISIBLE : View.GONE;
+            playableVideosButtons[i].setVisibility(visibility);
         }
     }
 }
