@@ -5,10 +5,10 @@ import android.content.pm.PackageManager;
 import android.media.AudioManager;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.SearchView;
 import android.widget.SeekBar;
 import android.widget.VideoView;
 
@@ -28,10 +28,11 @@ public class MainActivity extends AppCompatActivity
     private Button playBtn;
     private Button replayBtn;
     private Button stopBtn;
+    private SearchView searchView;
 
     //Runtime Attributes
     private String currentVideoName = "sample.mp4";
-    private Button[] playableVideosFromPathList;
+    private Button[] playableVideosButtons;
     AudioManager audioManager;
 
     @Override
@@ -47,8 +48,22 @@ public class MainActivity extends AppCompatActivity
         SetButtonListeners();
         String name = ListAllVideos();
         SetVideo(name);
-
+        SetSearchView();
+        SetVideoAudioListeners();
     }
+
+    private void SetSearchView()
+    {
+        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                String str = searchView.getQuery().toString();
+                OnSearchCloseAffectButtons(str);
+                return false;
+            }
+        });
+    }
+
 
     private void CacheAttributes()
     {
@@ -60,6 +75,7 @@ public class MainActivity extends AppCompatActivity
         pauseBtn = findViewById(R.id.pauseBtn);
         replayBtn = findViewById(R.id.replayBtn);
         stopBtn = findViewById(R.id.stopBtn);
+        searchView = findViewById(R.id.searchView);
 
         audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
     }
@@ -72,7 +88,7 @@ public class MainActivity extends AppCompatActivity
         stopBtn.setOnClickListener(view -> StopVideo());
     }
 
-    private void SetVideoSettingsListeners()
+    private void SetVideoAudioListeners()
     {
         SetVideo(currentVideoName);
         videoPlayer.setOnPreparedListener(mediaPlayer -> videoProgressBar.setMax(videoPlayer.getDuration()));
@@ -158,6 +174,7 @@ public class MainActivity extends AppCompatActivity
         ArrayList<String> strArray = FileUtility.FileNamesArray(VideoUtility.MEDIA_PATH,".mp4");
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT);
+        playableVideosButtons = new Button[strArray.size()];
         for(int i =0; i < strArray.size(); i++)
         {
             Button btn = new Button(this);
@@ -167,8 +184,19 @@ public class MainActivity extends AppCompatActivity
             btn.setOnClickListener(v -> {
                OnListedVideoClick(btnName);
             });
+            playableVideosButtons[i] = btn;
         }
         if(strArray.size() <=0) return "";
         return strArray.get(0);
+    }
+
+    private void OnSearchCloseAffectButtons(String searchQuery)
+    {
+        for(int i = 0; i < playableVideosButtons.length; i++)
+        {
+            if(playableVideosButtons[i].getText().toString().contains(searchQuery)) continue;
+            playableVideosButtons[i].setEnabled(false);
+            playableVideosButtons[i].setAlpha(0f);
+        }
     }
 }
