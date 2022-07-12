@@ -4,13 +4,13 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.media.AudioManager;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.SearchView;
 import android.widget.SeekBar;
+import android.widget.TextView;
 import android.widget.VideoView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity
     //XML Attributes
     private LinearLayout linearLayoutForVideosList;
     private VideoView videoPlayer;
-    private ProgressBar videoProgressBar;
+    private ProgressBar progressBar;
     private SeekBar soundSeekBar;
     private Button pauseBtn;
     private Button playBtn;
@@ -31,10 +31,13 @@ public class MainActivity extends AppCompatActivity
     private Button stopBtn;
     private SearchView searchView;
 
+    private TextView temp;
+
     //Runtime Attributes
     private String currentVideoName = "sample.mp4";
     private Button[] playableVideosButtons;
     AudioManager audioManager;
+    private VideoProgressBar videoProgressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -75,7 +78,7 @@ public class MainActivity extends AppCompatActivity
     {
         linearLayoutForVideosList = findViewById(R.id.linearLayoutForVideoButtons);
         videoPlayer = findViewById(R.id.videoView);
-        videoProgressBar = findViewById(R.id.videoProgressBar);
+        progressBar = findViewById(R.id.videoProgressBar);
         soundSeekBar = findViewById(R.id.soundSeekbar);
         playBtn = findViewById(R.id.playBtn);
         pauseBtn = findViewById(R.id.pauseBtn);
@@ -84,6 +87,8 @@ public class MainActivity extends AppCompatActivity
         searchView = findViewById(R.id.searchView);
 
         audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+        temp = findViewById(R.id.controls);
+        videoProgressBar = new VideoProgressBar(progressBar,videoPlayer, temp);
     }
 
     private void SetButtonListeners()
@@ -97,7 +102,7 @@ public class MainActivity extends AppCompatActivity
     private void SetVideoAudioListeners()
     {
         SetVideo(currentVideoName);
-        videoPlayer.setOnPreparedListener(mediaPlayer -> videoProgressBar.setMax(videoPlayer.getDuration()));
+        videoPlayer.setOnPreparedListener(mediaPlayer -> progressBar.setMax(videoPlayer.getDuration()));
 
         //General Audio Control
         int maxVol = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
@@ -132,6 +137,7 @@ public class MainActivity extends AppCompatActivity
     private void PauseVideo()
     {
         videoPlayer.pause();
+        videoProgressBar.StopProgress();
     }
 
     private void PlayVideo()
@@ -141,17 +147,7 @@ public class MainActivity extends AppCompatActivity
         else
             videoPlayer.start();
 
-        new CountDownTimer(videoPlayer.getDuration(), 1){
-
-            @Override
-            public void onTick(long l) {
-                videoProgressBar.setProgress(videoPlayer.getCurrentPosition(),true);
-            }
-
-            @Override
-            public void onFinish() {
-            }
-        }.start();
+        videoProgressBar.StartProgress();
     }
 
     private void RestartVideo()
@@ -159,12 +155,14 @@ public class MainActivity extends AppCompatActivity
         videoPlayer.stopPlayback();
         SetVideo(currentVideoName);
         videoPlayer.start();
+        videoProgressBar.StartProgress();
     }
 
     private void StopVideo()
     {
         videoPlayer.stopPlayback();
         SetVideo(currentVideoName);
+        videoProgressBar.StopProgress();
     }
 
     private void OnListedVideoClick(String nameOfVideo)
