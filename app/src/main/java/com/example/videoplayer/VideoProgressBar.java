@@ -22,8 +22,10 @@ public class VideoProgressBar
 
     public void StartProgress()
     {
+        textView.setText(0);
         int duration = videoPlayer.getDuration();
         progressBar.setMax(duration);
+        int buff = videoPlayer.getBufferPercentage();
         try
         {
             th = new Thread() {
@@ -36,7 +38,7 @@ public class VideoProgressBar
 
 
                         try {
-                            sleep(5L);
+                            sleep(buff);
                             progressBar.setProgress(current,false);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
@@ -57,6 +59,7 @@ public class VideoProgressBar
 
     public void StopProgress()
     {
+        //th.stop();
         th = null;
     }
 }
