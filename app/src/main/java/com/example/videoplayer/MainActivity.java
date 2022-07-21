@@ -2,6 +2,7 @@ package com.example.videoplayer;
 
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.os.Bundle;
 import android.view.View;
@@ -37,7 +38,7 @@ public class MainActivity extends AppCompatActivity
     private String currentVideoName = "sample.mp4";
     private Button[] playableVideosButtons;
     AudioManager audioManager;
-    private VideoProgressBar videoProgressBar;
+    //private VideoProgressBar videoProgressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -88,7 +89,7 @@ public class MainActivity extends AppCompatActivity
 
         audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         temp = findViewById(R.id.controls);
-        videoProgressBar = new VideoProgressBar(progressBar,videoPlayer, temp);
+        //videoProgressBar = new VideoProgressBar(progressBar,videoPlayer, temp);
     }
 
     private void SetButtonListeners()
@@ -137,7 +138,7 @@ public class MainActivity extends AppCompatActivity
     private void PauseVideo()
     {
         videoPlayer.pause();
-        videoProgressBar.StopProgress();
+        //videoProgressBar.StopProgress();
     }
 
     private void PlayVideo()
@@ -147,7 +148,7 @@ public class MainActivity extends AppCompatActivity
         else
             videoPlayer.start();
 
-        videoProgressBar.StartProgress();
+        //videoProgressBar.StartProgress();
     }
 
     private void RestartVideo()
@@ -155,14 +156,14 @@ public class MainActivity extends AppCompatActivity
         videoPlayer.stopPlayback();
         SetVideo(currentVideoName);
         videoPlayer.start();
-        videoProgressBar.StartProgress();
+        //videoProgressBar.StartProgress();
     }
 
     private void StopVideo()
     {
         videoPlayer.stopPlayback();
         SetVideo(currentVideoName);
-        videoProgressBar.StopProgress();
+        //videoProgressBar.StopProgress();
     }
 
     private void OnListedVideoClick(String nameOfVideo)
@@ -182,6 +183,7 @@ public class MainActivity extends AppCompatActivity
         for(int i =0; i < strArray.size(); i++)
         {
             Button btn = new Button(this);
+            btn.setBackgroundResource(R.drawable.custom_button);
             String btnName = strArray.get(i);
             btn.setText(btnName);
             linearLayoutForVideosList.addView(btn,lp);
