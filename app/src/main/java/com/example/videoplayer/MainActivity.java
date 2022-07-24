@@ -2,7 +2,6 @@ package com.example.videoplayer;
 
 import android.content.Context;
 import android.content.pm.PackageManager;
-import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.os.Bundle;
 import android.view.View;
@@ -30,9 +29,7 @@ public class MainActivity extends AppCompatActivity
     private Button playBtn;
     private Button replayBtn;
     private Button stopBtn;
-    //private SearchView searchView;
-
-    private TextView temp;
+    private SearchView searchView;
 
     //Runtime Attributes
     private String currentVideoName = "sample.mp4";
@@ -59,7 +56,7 @@ public class MainActivity extends AppCompatActivity
 
     private void SetSearchView()
     {
-        /*searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
                 OnSearchCloseAffectButtons(s);
@@ -71,7 +68,7 @@ public class MainActivity extends AppCompatActivity
                 OnSearchCloseAffectButtons(s);
                 return false;
             }
-        });*/
+        });
     }
 
 
@@ -85,10 +82,9 @@ public class MainActivity extends AppCompatActivity
         pauseBtn = findViewById(R.id.pauseBtn);
         replayBtn = findViewById(R.id.replayBtn);
         stopBtn = findViewById(R.id.stopBtn);
-        //searchView = findViewById(R.id.searchView);
+        searchView = findViewById(R.id.searchVideoView);
 
         audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-        temp = findViewById(R.id.controls);
         //videoProgressBar = new VideoProgressBar(progressBar,videoPlayer, temp);
     }
 

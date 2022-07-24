@@ -138,22 +138,36 @@
             android:layout_height="1dp"
             android:background="?android:attr/listDivider" />
 
-        <ScrollView
-            style="@android:style/Widget.ScrollView"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fillViewport="false"
-            android:scrollbarStyle="insideOverlay">
+            android:orientation="vertical">
 
-            <LinearLayout
-                android:id="@+id/linearLayoutForVideoButtons"
+            <SearchView
+                android:id="@+id/searchVideoView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_height="52dp">
+
+            </SearchView>
+
+            <ScrollView
+                style="@android:style/Widget.ScrollView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fillViewport="false"
+                android:scrollbarStyle="insideOverlay"
+                tools:ignore="SpeakableTextPresentCheck">
+
+                <LinearLayout
+                    android:id="@+id/linearLayoutForVideoButtons"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
 
-            </LinearLayout>
-        </ScrollView>
+                </LinearLayout>
+            </ScrollView>
+        </LinearLayout>
 
     </LinearLayout>
 </RelativeLayout>
