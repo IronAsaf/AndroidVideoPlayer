@@ -10,7 +10,6 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.SearchView;
 import android.widget.SeekBar;
-import android.widget.TextView;
 import android.widget.VideoView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,7 +22,6 @@ public class MainActivity extends AppCompatActivity
     //XML Attributes
     private LinearLayout linearLayoutForVideosList;
     private VideoView videoPlayer;
-    private ProgressBar progressBar;
     private SeekBar soundSeekBar;
     private Button pauseBtn;
     private Button playBtn;
@@ -35,7 +33,6 @@ public class MainActivity extends AppCompatActivity
     private String currentVideoName = "sample.mp4";
     private Button[] playableVideosButtons;
     AudioManager audioManager;
-    //private VideoProgressBar videoProgressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -76,7 +73,6 @@ public class MainActivity extends AppCompatActivity
     {
         linearLayoutForVideosList = findViewById(R.id.linearLayoutForVideoButtons);
         videoPlayer = findViewById(R.id.videoView);
-        progressBar = findViewById(R.id.videoProgressBar);
         soundSeekBar = findViewById(R.id.soundSeekbar);
         playBtn = findViewById(R.id.playBtn);
         pauseBtn = findViewById(R.id.pauseBtn);
@@ -85,7 +81,6 @@ public class MainActivity extends AppCompatActivity
         searchView = findViewById(R.id.searchVideoView);
 
         audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-        //videoProgressBar = new VideoProgressBar(progressBar,videoPlayer, temp);
     }
 
     private void SetButtonListeners()
@@ -99,7 +94,6 @@ public class MainActivity extends AppCompatActivity
     private void SetVideoAudioListeners()
     {
         SetVideo(currentVideoName);
-        videoPlayer.setOnPreparedListener(mediaPlayer -> progressBar.setMax(videoPlayer.getDuration()));
 
         //General Audio Control
         int maxVol = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
@@ -134,7 +128,6 @@ public class MainActivity extends AppCompatActivity
     private void PauseVideo()
     {
         videoPlayer.pause();
-        //videoProgressBar.StopProgress();
     }
 
     private void PlayVideo()
@@ -144,7 +137,6 @@ public class MainActivity extends AppCompatActivity
         else
             videoPlayer.start();
 
-        //videoProgressBar.StartProgress();
     }
 
     private void RestartVideo()
@@ -152,7 +144,6 @@ public class MainActivity extends AppCompatActivity
         videoPlayer.stopPlayback();
         SetVideo(currentVideoName);
         videoPlayer.start();
-        //videoProgressBar.StartProgress();
     }
 
     private void StopVideo()
