@@ -163,7 +163,6 @@ public class MainActivity extends AppCompatActivity implements RecycleViewAdapte
 
     private void OnListedVideoClick(String nameOfVideo)
     {
-        System.out.println("vid " + nameOfVideo);
         StopVideo();
         SetVideo(nameOfVideo);
         PlayVideo();
@@ -208,6 +207,5 @@ public class MainActivity extends AppCompatActivity implements RecycleViewAdapte
     {
         VideoDataModel model = videoButtonModels.get(position);
         OnListedVideoClick(model.getTextDisplay());
-        Toast.makeText(this, "Clicked " + model.getTextDisplay(), Toast.LENGTH_SHORT).show();
     }
 }
