@@ -4,11 +4,10 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.media.AudioManager;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.SearchView;
 import android.widget.SeekBar;
+import android.widget.Toast;
 import android.widget.VideoView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,7 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity
+public class MainActivity extends AppCompatActivity implements RecycleViewAdapterInterface
 {
     //XML Attributes
     //private LinearLayout linearLayoutForVideosList;
@@ -36,7 +35,7 @@ public class MainActivity extends AppCompatActivity
     //private Button[] playableVideosButtons;
     private AudioManager audioManager;
 
-    private ArrayList<VideoButtonModel> videoButtonModels;
+    private ArrayList<VideoDataModel> videoButtonModels;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -58,10 +57,16 @@ public class MainActivity extends AppCompatActivity
     private void SetUpRecyclerView()
     {
         if(videoButtonModels.size() <=0) return;
-        VideoButtonRecyclerViewAdapter adapter = new VideoButtonRecyclerViewAdapter(this, videoButtonModels);
+        VideoButtonRecyclerViewAdapter adapter = new VideoButtonRecyclerViewAdapter(this, videoButtonModels, this);
 
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        for(int i = 0; i < recyclerView.getChildCount(); i++)
+        {
+            Button btn = findViewById((int) adapter.getItemIdByIndex(i));
+            btn.setText(Integer.toString(i));
+        }
     }
 
     private void SetSearchView()
@@ -180,8 +185,9 @@ public class MainActivity extends AppCompatActivity
         videoButtonModels = new ArrayList<>();
         for(int i = 0; i < strArray.size(); i++)
         {
-            videoButtonModels.add(new VideoButtonModel(strArray.get(i), R.drawable.ic_baseline_video_library_24));
+            videoButtonModels.add(new VideoDataModel(strArray.get(i), R.drawable.ic_baseline_video_library_24));
         }
+
         /*LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT);
         playableVideosButtons = new Button[strArray.size()];
@@ -217,5 +223,13 @@ public class MainActivity extends AppCompatActivity
             int visibility = queryFindings ? View.VISIBLE : View.GONE;
             playableVideosButtons[i].setVisibility(visibility);
         }*/
+    }
+
+    @Override
+    public void onItemClick(int position)
+    {
+        VideoDataModel model = videoButtonModels.get(position);
+        OnListedVideoClick(model.getTextDisplay());
+        Toast.makeText(this, "Clicked " + model.getTextDisplay(), Toast.LENGTH_SHORT).show();
     }
 }
