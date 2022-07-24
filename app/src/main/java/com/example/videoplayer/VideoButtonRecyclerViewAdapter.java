@@ -12,9 +12,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class VideoButtonRecyclerViewAdapter // extends RecyclerView.Adapter<VideoButtonRecyclerViewAdapter.MyViewHolder>
+public class VideoButtonRecyclerViewAdapter extends RecyclerView.Adapter<VideoButtonRecyclerViewAdapter.MyViewHolder>
 {
-    /*private Context context;
+    private Context context;
     private ArrayList<VideoButtonModel> videoButtonModels;
 
     public VideoButtonRecyclerViewAdapter(Context context, ArrayList<VideoButtonModel> videoButtonModels)
@@ -53,5 +53,5 @@ public class VideoButtonRecyclerViewAdapter // extends RecyclerView.Adapter<Vide
             imageView = itemView.findViewById(R.id.recyclerImageView);
             button = itemView.findViewById(R.id.recyclerButton);
         }
-    }*/
+    }
 }

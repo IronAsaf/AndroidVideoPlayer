@@ -2,7 +2,7 @@ package com.example.videoplayer;
 
 public class VideoButtonModel
 {
-    /*private String buttonDisplay;
+    private String buttonDisplay;
     private int image;
 
 
@@ -17,5 +17,5 @@ public class VideoButtonModel
 
     public int getImage() {
         return image;
-    }*/
+    }
 }

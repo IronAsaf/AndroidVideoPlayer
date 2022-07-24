@@ -13,13 +13,15 @@ import android.widget.VideoView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity
 {
     //XML Attributes
-    private LinearLayout linearLayoutForVideosList;
+    //private LinearLayout linearLayoutForVideosList;
     private VideoView videoPlayer;
     private SeekBar soundSeekBar;
     private Button pauseBtn;
@@ -27,13 +29,14 @@ public class MainActivity extends AppCompatActivity
     private Button replayBtn;
     private Button stopBtn;
     private SearchView searchView;
+    private RecyclerView recyclerView;
 
     //Runtime Attributes
-    private String currentVideoName = "sample.mp4";
-    private Button[] playableVideosButtons;
+    private final String currentVideoName = "sample.mp4";
+    //private Button[] playableVideosButtons;
     private AudioManager audioManager;
 
-    //private ArrayList<VideoButtonModel> videoButtonModels;
+    private ArrayList<VideoButtonModel> videoButtonModels;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -47,9 +50,18 @@ public class MainActivity extends AppCompatActivity
         CacheAttributes();
         SetButtonListeners();
         String name = ListAllVideos();
+        SetUpRecyclerView();
         SetVideo(name);
         SetSearchView();
         SetVideoAudioListeners();
+    }
+    private void SetUpRecyclerView()
+    {
+        if(videoButtonModels.size() <=0) return;
+        VideoButtonRecyclerViewAdapter adapter = new VideoButtonRecyclerViewAdapter(this, videoButtonModels);
+
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
     private void SetSearchView()
@@ -72,7 +84,7 @@ public class MainActivity extends AppCompatActivity
 
     private void CacheAttributes()
     {
-        linearLayoutForVideosList = findViewById(R.id.lin);
+        //linearLayoutForVideosList = findViewById(R.id.lin);
         videoPlayer = findViewById(R.id.videoView);
         soundSeekBar = findViewById(R.id.soundSeekbar);
         playBtn = findViewById(R.id.playBtn);
@@ -80,7 +92,7 @@ public class MainActivity extends AppCompatActivity
         replayBtn = findViewById(R.id.replayBtn);
         stopBtn = findViewById(R.id.stopBtn);
         searchView = findViewById(R.id.searchVideoView);
-
+        recyclerView = findViewById(R.id.recycler);
         audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
     }
 
@@ -165,11 +177,12 @@ public class MainActivity extends AppCompatActivity
     private String ListAllVideos()
     {
         ArrayList<String> strArray = FileUtility.FileNamesArray(VideoUtility.MEDIA_PATH,".mp4");
-        /*for(int i = 0; i < strArray.size(); i++)
+        videoButtonModels = new ArrayList<>();
+        for(int i = 0; i < strArray.size(); i++)
         {
             videoButtonModels.add(new VideoButtonModel(strArray.get(i), R.drawable.ic_baseline_video_library_24));
-        }*/
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+        }
+        /*LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT);
         playableVideosButtons = new Button[strArray.size()];
         for(int i =0; i < strArray.size(); i++)
@@ -183,14 +196,14 @@ public class MainActivity extends AppCompatActivity
                OnListedVideoClick(btnName);
             });
             playableVideosButtons[i] = btn;
-        }
+        }*/
         if(strArray.size() <=0) return "";
         return strArray.get(0);
     }
 
     private void OnSearchCloseAffectButtons(String searchQuery)
     {
-        if(searchQuery.isEmpty())
+        /*if(searchQuery.isEmpty())
         {
             for(int i =0; i < playableVideosButtons.length; i++)
             {
@@ -203,6 +216,6 @@ public class MainActivity extends AppCompatActivity
             boolean queryFindings = playableVideosButtons[i].getText().toString().contains(searchQuery);
             int visibility = queryFindings ? View.VISIBLE : View.GONE;
             playableVideosButtons[i].setVisibility(visibility);
-        }
+        }*/
     }
 }
