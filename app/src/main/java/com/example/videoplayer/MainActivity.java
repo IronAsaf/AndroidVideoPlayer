@@ -20,7 +20,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity
 {
     //XML Attributes
-    private LinearLayout linearLayoutForVideosList;
+    //private LinearLayout linearLayoutForVideosList;
     private VideoView videoPlayer;
     private SeekBar soundSeekBar;
     private Button pauseBtn;
@@ -32,7 +32,9 @@ public class MainActivity extends AppCompatActivity
     //Runtime Attributes
     private String currentVideoName = "sample.mp4";
     private Button[] playableVideosButtons;
-    AudioManager audioManager;
+    private AudioManager audioManager;
+
+    private ArrayList<VideoButtonModel> videoButtonModels;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -71,7 +73,7 @@ public class MainActivity extends AppCompatActivity
 
     private void CacheAttributes()
     {
-        linearLayoutForVideosList = findViewById(R.id.linearLayoutForVideoButtons);
+        //linearLayoutForVideosList = findViewById(R.id.linearLayoutForVideoButtons);
         videoPlayer = findViewById(R.id.videoView);
         soundSeekBar = findViewById(R.id.soundSeekbar);
         playBtn = findViewById(R.id.playBtn);
@@ -164,7 +166,11 @@ public class MainActivity extends AppCompatActivity
     private String ListAllVideos()
     {
         ArrayList<String> strArray = FileUtility.FileNamesArray(VideoUtility.MEDIA_PATH,".mp4");
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+        for(int i = 0; i < strArray.size(); i++)
+        {
+            videoButtonModels.add(new VideoButtonModel(strArray.get(i), R.drawable.ic_baseline_video_library_24));
+        }
+        /*LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT);
         playableVideosButtons = new Button[strArray.size()];
         for(int i =0; i < strArray.size(); i++)
@@ -173,12 +179,12 @@ public class MainActivity extends AppCompatActivity
             btn.setBackgroundResource(R.drawable.custom_button);
             String btnName = strArray.get(i);
             btn.setText(btnName);
-            linearLayoutForVideosList.addView(btn,lp);
+            //linearLayoutForVideosList.addView(btn,lp);
             btn.setOnClickListener(v -> {
                OnListedVideoClick(btnName);
             });
             playableVideosButtons[i] = btn;
-        }
+        }*/
         if(strArray.size() <=0) return "";
         return strArray.get(0);
     }

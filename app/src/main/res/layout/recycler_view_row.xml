@@ -18,7 +18,7 @@
             android:layout_height="wrap_content">
 
             <ImageView
-                android:id="@+id/imageView"
+                android:id="@+id/recyclerImageView"
                 android:layout_width="55dp"
                 android:layout_height="50dp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -30,7 +30,7 @@
                 app:srcCompat="@drawable/ic_baseline_video_library_24" />
 
             <Button
-                android:id="@+id/recBtn"
+                android:id="@+id/recyclerButton"
                 android:layout_width="320dp"
                 android:layout_height="51dp"
                 android:background="@drawable/custom_button"
@@ -40,7 +40,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toEndOf="@+id/imageView"
+                app:layout_constraintStart_toEndOf="@+id/recyclerImageView"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="1.0" />
 
