@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,7 +8,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@drawable/gradient_bg">
 
         <TextView
             android:id="@+id/title"
@@ -19,7 +19,7 @@
             android:text="@string/special_video_player"
             android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-            android:textColor="#731CF0"
+            android:textColor="@color/material_dynamic_neutral_variant10"
             android:textSize="34sp"
             android:textStyle="bold"
             android:typeface="normal" />
@@ -54,7 +54,7 @@
             android:fontFamily="@font/ibm_plexsans_hebrew_regular"
             android:text="@string/controls"
             android:textAlignment="center"
-            android:textColor="#731CF0"
+            android:textColor="@color/material_dynamic_neutral20"
             android:textSize="16sp"
             android:textStyle="bold"
             android:typeface="normal" />
@@ -63,7 +63,8 @@
             android:id="@+id/divider3"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="?android:attr/listDivider" />
+            android:background="?android:attr/listDivider"
+            android:textAlignment="center" />
 
         <SeekBar
             android:id="@+id/soundSeekbar"
@@ -83,42 +84,50 @@
 
             <Button
                 android:id="@+id/playBtn"
-                style="?android:attr/buttonBarButtonStyle"
+                style="?attr/radioButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:fontFamily="@font/ibm_plexsans_hebrew_bold"
                 android:text="@string/play"
+                android:textAlignment="center"
+                android:textColor="@color/design_default_color_secondary_variant"
                 tools:ignore="TouchTargetSizeCheck" />
 
             <Button
                 android:id="@+id/pauseBtn"
-                style="?android:attr/buttonBarButtonStyle"
+                style="?attr/radioButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:fontFamily="@font/ibm_plexsans_hebrew_bold"
                 android:text="@string/pause"
+                android:textAlignment="center"
+                android:textColor="@color/design_default_color_secondary_variant"
                 tools:ignore="TouchTargetSizeCheck" />
 
             <Button
                 android:id="@+id/stopBtn"
-                style="?android:attr/buttonBarButtonStyle"
+                style="?attr/radioButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:fontFamily="@font/ibm_plexsans_hebrew_bold"
                 android:text="@string/stop"
+                android:textAlignment="center"
+                android:textColor="@color/design_default_color_secondary_variant"
                 tools:ignore="TouchTargetSizeCheck" />
 
             <Button
                 android:id="@+id/replayBtn"
-                style="?android:attr/buttonBarButtonStyle"
+                style="?attr/radioButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:fontFamily="@font/ibm_plexsans_hebrew_bold"
                 android:text="@string/replay"
+                android:textAlignment="center"
+                android:textColor="@color/design_default_color_secondary_variant"
                 tools:ignore="TouchTargetSizeCheck" />
 
         </LinearLayout>
@@ -142,12 +151,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <SearchView
-                    android:id="@+id/searchView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
 
-                </SearchView>
             </LinearLayout>
         </ScrollView>
 

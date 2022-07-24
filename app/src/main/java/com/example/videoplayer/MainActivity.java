@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity
     private Button playBtn;
     private Button replayBtn;
     private Button stopBtn;
-    private SearchView searchView;
+    //private SearchView searchView;
 
     private TextView temp;
 
@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity
 
     private void SetSearchView()
     {
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+        /*searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
                 OnSearchCloseAffectButtons(s);
@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity
                 OnSearchCloseAffectButtons(s);
                 return false;
             }
-        });
+        });*/
     }
 
 
@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity
         pauseBtn = findViewById(R.id.pauseBtn);
         replayBtn = findViewById(R.id.replayBtn);
         stopBtn = findViewById(R.id.stopBtn);
-        searchView = findViewById(R.id.searchView);
+        //searchView = findViewById(R.id.searchView);
 
         audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         temp = findViewById(R.id.controls);
