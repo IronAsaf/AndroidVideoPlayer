@@ -41,12 +41,6 @@
             android:layout_height="1dp"
             android:background="?android:attr/listDivider" />
 
-        <ProgressBar
-            android:id="@+id/videoProgressBar"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
         <TextView
             android:id="@+id/controls"
             android:layout_width="match_parent"
@@ -150,23 +144,11 @@
 
             </SearchView>
 
-            <ScrollView
-                style="@android:style/Widget.ScrollView"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:fillViewport="false"
-                android:scrollbarStyle="insideOverlay"
-                tools:ignore="SpeakableTextPresentCheck">
+                android:layout_height="match_parent" />
 
-                <LinearLayout
-                    android:id="@+id/linearLayoutForVideoButtons"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-
-                </LinearLayout>
-            </ScrollView>
         </LinearLayout>
 
     </LinearLayout>

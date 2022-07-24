@@ -4,38 +4,38 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.media.AudioManager;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.SearchView;
 import android.widget.SeekBar;
-import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.VideoView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity
+public class MainActivity extends AppCompatActivity implements RecycleViewAdapterInterface
 {
     //XML Attributes
-    private LinearLayout linearLayoutForVideosList;
+    //private LinearLayout linearLayoutForVideosList;
     private VideoView videoPlayer;
-    private ProgressBar progressBar;
     private SeekBar soundSeekBar;
     private Button pauseBtn;
     private Button playBtn;
     private Button replayBtn;
     private Button stopBtn;
     private SearchView searchView;
+    private RecyclerView recyclerView;
 
     //Runtime Attributes
-    private String currentVideoName = "sample.mp4";
-    private Button[] playableVideosButtons;
-    AudioManager audioManager;
-    //private VideoProgressBar videoProgressBar;
+    private final String currentVideoName = "sample.mp4";
+    //private Button[] playableVideosButtons;
+    private AudioManager audioManager;
+
+    private ArrayList<VideoDataModel> videoButtonModels;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -49,9 +49,24 @@ public class MainActivity extends AppCompatActivity
         CacheAttributes();
         SetButtonListeners();
         String name = ListAllVideos();
+        SetUpRecyclerView();
         SetVideo(name);
         SetSearchView();
         SetVideoAudioListeners();
+    }
+    private void SetUpRecyclerView()
+    {
+        if(videoButtonModels.size() <=0) return;
+        VideoButtonRecyclerViewAdapter adapter = new VideoButtonRecyclerViewAdapter(this, videoButtonModels, this);
+
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        for(int i = 0; i < recyclerView.getChildCount(); i++)
+        {
+            Button btn = findViewById((int) adapter.getItemIdByIndex(i));
+            btn.setText(Integer.toString(i));
+        }
     }
 
     private void SetSearchView()
@@ -74,18 +89,16 @@ public class MainActivity extends AppCompatActivity
 
     private void CacheAttributes()
     {
-        linearLayoutForVideosList = findViewById(R.id.linearLayoutForVideoButtons);
+        //linearLayoutForVideosList = findViewById(R.id.lin);
         videoPlayer = findViewById(R.id.videoView);
-        progressBar = findViewById(R.id.videoProgressBar);
         soundSeekBar = findViewById(R.id.soundSeekbar);
         playBtn = findViewById(R.id.playBtn);
         pauseBtn = findViewById(R.id.pauseBtn);
         replayBtn = findViewById(R.id.replayBtn);
         stopBtn = findViewById(R.id.stopBtn);
         searchView = findViewById(R.id.searchVideoView);
-
+        recyclerView = findViewById(R.id.recycler);
         audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-        //videoProgressBar = new VideoProgressBar(progressBar,videoPlayer, temp);
     }
 
     private void SetButtonListeners()
@@ -99,7 +112,6 @@ public class MainActivity extends AppCompatActivity
     private void SetVideoAudioListeners()
     {
         SetVideo(currentVideoName);
-        videoPlayer.setOnPreparedListener(mediaPlayer -> progressBar.setMax(videoPlayer.getDuration()));
 
         //General Audio Control
         int maxVol = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
@@ -134,7 +146,6 @@ public class MainActivity extends AppCompatActivity
     private void PauseVideo()
     {
         videoPlayer.pause();
-        //videoProgressBar.StopProgress();
     }
 
     private void PlayVideo()
@@ -144,7 +155,6 @@ public class MainActivity extends AppCompatActivity
         else
             videoPlayer.start();
 
-        //videoProgressBar.StartProgress();
     }
 
     private void RestartVideo()
@@ -152,7 +162,6 @@ public class MainActivity extends AppCompatActivity
         videoPlayer.stopPlayback();
         SetVideo(currentVideoName);
         videoPlayer.start();
-        //videoProgressBar.StartProgress();
     }
 
     private void StopVideo()
@@ -173,7 +182,13 @@ public class MainActivity extends AppCompatActivity
     private String ListAllVideos()
     {
         ArrayList<String> strArray = FileUtility.FileNamesArray(VideoUtility.MEDIA_PATH,".mp4");
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+        videoButtonModels = new ArrayList<>();
+        for(int i = 0; i < strArray.size(); i++)
+        {
+            videoButtonModels.add(new VideoDataModel(strArray.get(i), R.drawable.ic_baseline_video_library_24));
+        }
+
+        /*LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT);
         playableVideosButtons = new Button[strArray.size()];
         for(int i =0; i < strArray.size(); i++)
@@ -187,14 +202,14 @@ public class MainActivity extends AppCompatActivity
                OnListedVideoClick(btnName);
             });
             playableVideosButtons[i] = btn;
-        }
+        }*/
         if(strArray.size() <=0) return "";
         return strArray.get(0);
     }
 
     private void OnSearchCloseAffectButtons(String searchQuery)
     {
-        if(searchQuery.isEmpty())
+        /*if(searchQuery.isEmpty())
         {
             for(int i =0; i < playableVideosButtons.length; i++)
             {
@@ -207,6 +222,14 @@ public class MainActivity extends AppCompatActivity
             boolean queryFindings = playableVideosButtons[i].getText().toString().contains(searchQuery);
             int visibility = queryFindings ? View.VISIBLE : View.GONE;
             playableVideosButtons[i].setVisibility(visibility);
-        }
+        }*/
+    }
+
+    @Override
+    public void onItemClick(int position)
+    {
+        VideoDataModel model = videoButtonModels.get(position);
+        OnListedVideoClick(model.getTextDisplay());
+        Toast.makeText(this, "Clicked " + model.getTextDisplay(), Toast.LENGTH_SHORT).show();
     }
 }
