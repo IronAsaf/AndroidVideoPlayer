@@ -20,7 +20,6 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity implements RecycleViewAdapterInterface
 {
     //XML Attributes
-    //private LinearLayout linearLayoutForVideosList;
     private VideoView videoPlayer;
     private SeekBar soundSeekBar;
     private Button pauseBtn;
@@ -32,7 +31,6 @@ public class MainActivity extends AppCompatActivity implements RecycleViewAdapte
 
     //Runtime Attributes
     private final String currentVideoName = "sample.mp4";
-    //private Button[] playableVideosButtons;
     private AudioManager audioManager;
 
     private ArrayList<VideoDataModel> videoButtonModels;
@@ -61,12 +59,6 @@ public class MainActivity extends AppCompatActivity implements RecycleViewAdapte
 
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        for(int i = 0; i < recyclerView.getChildCount(); i++)
-        {
-            Button btn = findViewById((int) adapter.getItemIdByIndex(i));
-            btn.setText(Integer.toString(i));
-        }
     }
 
     private void SetSearchView()
@@ -89,7 +81,6 @@ public class MainActivity extends AppCompatActivity implements RecycleViewAdapte
 
     private void CacheAttributes()
     {
-        //linearLayoutForVideosList = findViewById(R.id.lin);
         videoPlayer = findViewById(R.id.videoView);
         soundSeekBar = findViewById(R.id.soundSeekbar);
         playBtn = findViewById(R.id.playBtn);
@@ -168,7 +159,6 @@ public class MainActivity extends AppCompatActivity implements RecycleViewAdapte
     {
         videoPlayer.stopPlayback();
         SetVideo(currentVideoName);
-        //videoProgressBar.StopProgress();
     }
 
     private void OnListedVideoClick(String nameOfVideo)
@@ -187,42 +177,30 @@ public class MainActivity extends AppCompatActivity implements RecycleViewAdapte
         {
             videoButtonModels.add(new VideoDataModel(strArray.get(i), R.drawable.ic_baseline_video_library_24));
         }
-
-        /*LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT);
-        playableVideosButtons = new Button[strArray.size()];
-        for(int i =0; i < strArray.size(); i++)
-        {
-            Button btn = new Button(this);
-            btn.setBackgroundResource(R.drawable.custom_button);
-            String btnName = strArray.get(i);
-            btn.setText(btnName);
-            linearLayoutForVideosList.addView(btn,lp);
-            btn.setOnClickListener(v -> {
-               OnListedVideoClick(btnName);
-            });
-            playableVideosButtons[i] = btn;
-        }*/
         if(strArray.size() <=0) return "";
         return strArray.get(0);
     }
 
     private void OnSearchCloseAffectButtons(String searchQuery)
     {
-        /*if(searchQuery.isEmpty())
+        //Roundabout way
+
+        ArrayList<VideoDataModel> tempDataModels = new ArrayList<>();
+        if(searchQuery.isEmpty())
         {
-            for(int i =0; i < playableVideosButtons.length; i++)
-            {
-                playableVideosButtons[i].setVisibility(View.VISIBLE);
-            }
+            String cah = ListAllVideos();
+            SetUpRecyclerView();
             return;
         }
-        for(int i = 0; i < playableVideosButtons.length; i++)
+        for(int i = 0; i < videoButtonModels.size(); i++)
         {
-            boolean queryFindings = playableVideosButtons[i].getText().toString().contains(searchQuery);
-            int visibility = queryFindings ? View.VISIBLE : View.GONE;
-            playableVideosButtons[i].setVisibility(visibility);
-        }*/
+            boolean queryFindings = videoButtonModels.get(i).getTextDisplay().contains(searchQuery);
+            if(!queryFindings) continue;
+            tempDataModels.add(new VideoDataModel(videoButtonModels.get(i)));
+        }
+
+        videoButtonModels = VideoUtility.cloneVideoDataModel(tempDataModels);
+        SetUpRecyclerView();
     }
 
     @Override

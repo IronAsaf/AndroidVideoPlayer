@@ -45,11 +45,6 @@ public class VideoButtonRecyclerViewAdapter extends RecyclerView.Adapter<VideoBu
         return videoButtonModels.size();
     }
 
-    public long getItemIdByIndex(int pos)
-    {
-        return getItemId(pos);
-    }
-
     public static class MyViewHolder extends RecyclerView.ViewHolder
     {
         private TextView textView;
@@ -69,7 +64,7 @@ public class VideoButtonRecyclerViewAdapter extends RecyclerView.Adapter<VideoBu
                     recycleViewAdapterInterface.onItemClick(pos);
                 }
             });
-
         }
+
     }
 }

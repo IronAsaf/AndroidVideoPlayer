@@ -11,6 +11,12 @@ public class VideoDataModel
         this.image = image;
     }
 
+    public VideoDataModel(VideoDataModel other)
+    {
+        this.image = other.getImage();
+        this.textDisplay = other.getTextDisplay();
+    }
+
     public String getTextDisplay() {
         return textDisplay;
     }

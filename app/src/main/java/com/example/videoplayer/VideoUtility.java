@@ -28,4 +28,15 @@ public class VideoUtility {
 
         return arrayFiles;
     }
+
+    public static ArrayList<VideoDataModel> cloneVideoDataModel(ArrayList<VideoDataModel> clone)
+    {
+        ArrayList<VideoDataModel> toReturn = new ArrayList<>();
+        for(int i = 0; i < clone.size(); i++)
+        {
+            toReturn.add(new VideoDataModel(clone.get(i)));
+        }
+        return toReturn;
+    }
+
 }
